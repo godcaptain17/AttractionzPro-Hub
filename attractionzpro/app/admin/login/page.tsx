@@ -2,25 +2,25 @@
 // app/admin/login/page.tsx
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, Eye, EyeOff, Sparkles, AlertCircle } from 'lucide-react';
+import { Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [form, setForm]       = useState({ email: '', password: '' });
-  const [showPw, setShowPw]   = useState(false);
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState('');
+  const [error, setError] = useState('');
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      const res  = await fetch('/api/auth/login', {
-        method:  'POST',
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(form),
+        body: JSON.stringify(form),
       });
       const data = await res.json();
       if (data.success) {
@@ -38,23 +38,20 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen bg-black grid-luxury flex items-center justify-center px-6">
-      {/* Decorative bg */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-gold/5 blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-sm">
-        {/* Logo */}
         <div className="text-center mb-10">
-          <div className="w-16 h-16 rounded-full border-2 border-gold/30 flex items-center justify-center mx-auto mb-4 animate-pulse-gold">
-            <Sparkles className="w-7 h-7 text-gold" />
+          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gold/30 mx-auto mb-4">
+            <img src="/logo.jpg" alt="AttractionzPro Logo" className="w-full h-full object-cover" />
           </div>
           <h1 className="font-display text-4xl text-white">Admin Portal</h1>
           <p className="font-mono text-[10px] text-gray-600 tracking-[0.3em] uppercase mt-1">AttractionzPro Hub</p>
           <div className="w-12 h-px bg-gold mx-auto mt-4" />
         </div>
 
-        {/* Form */}
         <form onSubmit={submit} className="border border-black-border bg-black-soft p-8 space-y-5">
           {error && (
             <div className="flex items-center gap-3 p-3 bg-red-900/20 border border-red-900/40 text-red-400 text-sm">

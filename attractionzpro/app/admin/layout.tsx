@@ -1,7 +1,7 @@
 'use client';
 // app/admin/layout.tsx — Persistent admin sidebar layout
 import React, { useState, useEffect } from 'react';
-import Link     from 'next/link';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard, Calendar, ShoppingBag, Package, MessageSquare,
@@ -10,21 +10,20 @@ import {
 import toast from 'react-hot-toast';
 
 const NAV_ITEMS = [
-  { href: '/admin/dashboard',    icon: LayoutDashboard, label: 'Dashboard'    },
-  { href: '/admin/appointments', icon: Calendar,        label: 'Appointments' },
-  { href: '/admin/products',     icon: Package,         label: 'Products'     },
-  { href: '/admin/orders',       icon: ShoppingBag,     label: 'Orders'       },
-  { href: '/admin/messages',     icon: MessageSquare,   label: 'Messages'     },
-  { href: '/admin/gallery',      icon: Image,           label: 'Gallery'      },
-  { href: '/admin/reviews',      icon: Star,            label: 'Reviews'      },
+  { href: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { href: '/admin/appointments', icon: Calendar, label: 'Appointments' },
+  { href: '/admin/products', icon: Package, label: 'Products' },
+  { href: '/admin/orders', icon: ShoppingBag, label: 'Orders' },
+  { href: '/admin/messages', icon: MessageSquare, label: 'Messages' },
+  { href: '/admin/gallery', icon: Image, label: 'Gallery' },
+  { href: '/admin/reviews', icon: Star, label: 'Reviews' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router   = useRouter();
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Don't show sidebar on login page
   if (pathname === '/admin/login') return <>{children}</>;
 
   const logout = async () => {
@@ -35,12 +34,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen bg-black flex">
-      {/* Sidebar */}
       <aside className={`fixed top-0 left-0 bottom-0 z-50 w-64 bg-black-soft border-r border-black-border flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
-        {/* Logo */}
         <div className="p-6 border-b border-black-border flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full border border-gold/40 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-4 h-4 text-gold" />
+          <div className="w-9 h-9 rounded-full overflow-hidden border border-gold/40 flex-shrink-0">
+            <img src="/logo.jpg" alt="AttractionzPro Logo" className="w-full h-full object-cover" />
           </div>
           <div>
             <p className="font-display text-base text-white leading-none">AttractionzPro</p>
@@ -51,7 +48,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </button>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 py-4 overflow-y-auto">
           {NAV_ITEMS.map(({ href, icon: Icon, label }) => {
             const active = pathname.startsWith(href);
@@ -70,7 +66,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        {/* Bottom */}
         <div className="p-4 border-t border-black-border space-y-2">
           <Link href="/" target="_blank" className="admin-nav-item text-xs">
             <Sparkles className="w-4 h-4" />
@@ -83,14 +78,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </aside>
 
-      {/* Overlay (mobile) */}
       {sidebarOpen && (
-  <div className="fixed inset-0 bg-black/60 z-40 lg:hidden pointer-events-auto" onClick={() => setSidebarOpen(false)} />
-)}
+        <div className="fixed inset-0 bg-black/60 z-40 lg:hidden pointer-events-auto" onClick={() => setSidebarOpen(false)} />
+      )}
 
-      {/* Main content */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
-        {/* Top bar */}
         <header className="sticky top-0 z-30 bg-black-soft border-b border-black-border px-6 py-4 flex items-center gap-4">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-gray-500 hover:text-white">
             <Menu className="w-5 h-5" />
@@ -106,7 +98,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </header>
 
-        {/* Page content */}
         <main className="flex-1 p-6 overflow-y-auto relative z-10 pr-4">
           {children}
         </main>
