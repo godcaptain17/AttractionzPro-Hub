@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 // app/api/appointments/route.ts
 import { NextRequest, NextResponse }   from 'next/server';
 import { createAdminClient }           from '@/lib/supabase';
