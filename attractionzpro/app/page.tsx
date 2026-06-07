@@ -25,7 +25,7 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <img src="/logo.png" alt="AttractionzPro Hub Logo" className="w-10 h-10 rounded-full object-cover" />
+          <img src="/logo.png" alt="AttractionzPro Hub Logo" className="w-12 h-12 rounded-full object-contain" />
           <div>
             <p className="font-display text-lg text-white leading-none">AttractionzPro</p>
             <p className="font-mono text-[10px] text-gold tracking-[0.3em] uppercase">Hub</p>
