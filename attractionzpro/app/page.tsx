@@ -1,15 +1,13 @@
 'use client';
-// app/page.tsx — AttractionzPro Hub Homepage
-import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+// app/page.tsx
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
-  Star, MapPin, Phone, Instagram, Clock, ChevronRight,
-  Sparkles, ShoppingBag, Calendar, ArrowRight, MessageSquare, Send,
+  Star, MapPin, Phone, Instagram, Clock,
+  ShoppingBag, Calendar, ArrowRight, MessageSquare, Send,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-// ── Navigation ───────────────────────────────────────────────
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -23,7 +21,6 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-md border-b border-black-border' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <img src="/logo.jpg" alt="AttractionzPro Hub Logo" className="w-12 h-12 rounded-full object-contain" />
           <div>
@@ -31,8 +28,6 @@ function Navbar() {
             <p className="font-mono text-[10px] text-gold tracking-[0.3em] uppercase">Hub</p>
           </div>
         </Link>
-
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {[['Services', '#services'], ['Gallery', '/gallery'], ['Shop', '/shop'], ['Contact', '#contact']].map(([label, href]) => (
             <Link key={label} href={href} className="text-gray-400 hover:text-gold transition-colors font-body text-sm tracking-wide">
@@ -40,23 +35,15 @@ function Navbar() {
             </Link>
           ))}
         </div>
-
-        {/* CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/book" className="btn-gold text-[11px] py-3 px-6">
-            Book Now
-          </Link>
+          <Link href="/book" className="btn-gold text-[11px] py-3 px-6">Book Now</Link>
         </div>
-
-        {/* Hamburger */}
         <button onClick={() => setOpen(!open)} className="md:hidden text-white p-2">
           <div className={`w-6 h-0.5 bg-current transition-all mb-1.5 ${open ? 'rotate-45 translate-y-2' : ''}`} />
           <div className={`w-6 h-0.5 bg-current transition-all mb-1.5 ${open ? 'opacity-0' : ''}`} />
           <div className={`w-6 h-0.5 bg-current transition-all ${open ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
-
-      {/* Mobile Menu */}
       {open && (
         <div className="md:hidden bg-black-soft border-t border-black-border py-6 px-6 flex flex-col gap-4">
           {[['Services', '#services'], ['Gallery', '/gallery'], ['Shop', '/shop'], ['Contact', '#contact']].map(([label, href]) => (
@@ -71,30 +58,22 @@ function Navbar() {
   );
 }
 
-// ── Hero Section ─────────────────────────────────────────────
 function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black grid-luxury">
-      {/* Decorative orbs */}
       <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-gold/5 blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-gold/8 blur-2xl pointer-events-none" />
-
-      {/* Content */}
       <div className="relative z-10 text-center max-w-5xl mx-auto px-6 pt-20">
         <span className="section-label animate-fade-in">Surulere, Lagos, Nigeria</span>
-
         <h1 className="font-display text-6xl md:text-8xl lg:text-9xl text-white leading-[0.9] mb-6 animate-slide-up">
           Where Beauty<br />
           <span className="text-gold-shimmer italic">Meets Luxury</span>
         </h1>
-
         <p className="font-script text-2xl md:text-3xl text-gold/80 mb-4">AttractionzPro Hub</p>
-
         <p className="font-body text-gray-400 text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
           Premium nail care, bespoke nail art, custom designs, and exclusive perfume collections.
           Experience artistry redefined at Lagos' most luxurious beauty destination.
         </p>
-
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/book" className="btn-gold flex items-center gap-2 group">
             <Calendar className="w-4 h-4" />
@@ -106,8 +85,6 @@ function HeroSection() {
             Shop Perfumes
           </Link>
         </div>
-
-        {/* Stats */}
         <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto mt-20 pt-12 border-t border-black-border">
           {[['500+', 'Happy Clients'], ['50+', 'Nail Designs'], ['20+', 'Luxury Perfumes']].map(([n, l]) => (
             <div key={l} className="text-center">
@@ -117,8 +94,6 @@ function HeroSection() {
           ))}
         </div>
       </div>
-
-      {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
         <span className="font-mono text-[9px] text-gray-600 tracking-[0.3em] uppercase">Scroll</span>
         <div className="w-px h-10 bg-gradient-to-b from-gold/50 to-transparent" />
@@ -127,7 +102,6 @@ function HeroSection() {
   );
 }
 
-// ── Services Section ─────────────────────────────────────────
 const SERVICES_DATA = [
   { icon: '💅', title: 'Classic Manicure', desc: 'Shape, buff, and polish to perfection with premium products.' },
   { icon: '✨', title: 'Gel Manicure', desc: 'Long-lasting gel formula for a flawless chip-free finish.' },
@@ -149,7 +123,6 @@ function ServicesSection() {
             Each service is crafted with artisanal precision, using only the finest products.
           </p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black-border">
           {SERVICES_DATA.map((svc) => (
             <div key={svc.title} className="bg-black-soft p-8 group hover:bg-black-card transition-all duration-500 relative overflow-hidden">
@@ -163,24 +136,19 @@ function ServicesSection() {
             </div>
           ))}
         </div>
-
         <div className="text-center mt-12">
-          <Link href="/book" className="btn-gold">
-            Book Your Service
-          </Link>
+          <Link href="/book" className="btn-gold">Book Your Service</Link>
         </div>
       </div>
     </section>
   );
 }
 
-// ── About Section ────────────────────────────────────────────
 function AboutSection() {
   return (
     <section className="py-28 bg-black overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text */}
           <div>
             <span className="section-label">Our Story</span>
             <h2 className="font-display text-5xl md:text-6xl text-white mb-6 leading-[1.1]">
@@ -200,10 +168,10 @@ function AboutSection() {
             </p>
             <div className="grid grid-cols-2 gap-6">
               {[
-                { icon: <Clock className="w-5 h-5" />, label: 'Mon – Sat', value: '9:00 AM – 6:00 PM' },
+                { icon: <Clock className="w-5 h-5" />, label: 'Mon - Sat', value: '9:00 AM - 6:00 PM' },
                 { icon: <MapPin className="w-5 h-5" />, label: 'Location', value: 'Surulere, Lagos' },
                 { icon: <Phone className="w-5 h-5" />, label: 'Call Us', value: '+234 802 320 8886' },
-                { icon: <Star className="w-5 h-5" />, label: 'Rating', value: '5.0 ★ — Google' },
+                { icon: <Star className="w-5 h-5" />, label: 'Rating', value: '5.0 - Google' },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-3 p-4 border border-black-border hover:border-gold/30 transition-colors">
                   <span className="text-gold mt-0.5">{item.icon}</span>
@@ -215,8 +183,6 @@ function AboutSection() {
               ))}
             </div>
           </div>
-
-          {/* Visual */}
           <div className="relative">
             <div className="aspect-square bg-black-card border border-black-border relative overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
@@ -225,16 +191,11 @@ function AboutSection() {
                   <p className="font-mono text-xs text-gray-700 tracking-[0.5em] uppercase mt-4">Hub</p>
                 </div>
               </div>
-              {/* Decorative corners */}
               {['top-3 left-3', 'top-3 right-3', 'bottom-3 left-3', 'bottom-3 right-3'].map((pos) => (
                 <div key={pos} className={`absolute ${pos} w-8 h-8 border-gold/40`}
-                  style={{
-                    borderWidth: pos.includes('top') && pos.includes('left') ? '2px 0 0 2px' :
-                      pos.includes('top') ? '2px 2px 0 0' : pos.includes('left') ? '0 0 2px 2px' : '0 2px 2px 0'
-                  }} />
+                  style={{ borderWidth: pos.includes('top') && pos.includes('left') ? '2px 0 0 2px' : pos.includes('top') ? '2px 2px 0 0' : pos.includes('left') ? '0 0 2px 2px' : '0 2px 2px 0' }} />
               ))}
             </div>
-            {/* Floating badge */}
             <div className="absolute -bottom-6 -left-6 bg-gold p-6">
               <p className="font-display text-4xl text-black font-bold leading-none">5★</p>
               <p className="font-mono text-[9px] text-black/70 tracking-widest uppercase mt-1">Rated</p>
@@ -246,7 +207,6 @@ function AboutSection() {
   );
 }
 
-// ── Reviews Section ──────────────────────────────────────────
 function ReviewsSection() {
   const [reviews, setReviews] = useState<{ id: string; customer_name: string; rating: number; comment: string }[]>([]);
   const [form, setForm] = useState({ customer_name: '', rating: 5, comment: '' });
@@ -295,7 +255,6 @@ function ReviewsSection() {
           <h2 className="font-display text-5xl md:text-6xl text-white">What They Say</h2>
           <div className="gold-divider" />
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {displayReviews.map((rev) => (
             <div key={rev.id} className="luxury-card p-8 group">
@@ -314,18 +273,11 @@ function ReviewsSection() {
             </div>
           ))}
         </div>
-
-        {/* Review submission */}
         <div className="max-w-2xl mx-auto border border-black-border p-8">
           <h3 className="font-display text-2xl text-white mb-2">Share Your Experience</h3>
           <p className="font-body text-gray-500 text-sm mb-6">Your review helps others discover our services.</p>
           <form onSubmit={submitReview} className="space-y-4">
-            <input
-              className="luxury-input"
-              placeholder="Your name"
-              value={form.customer_name}
-              onChange={e => setForm(p => ({ ...p, customer_name: e.target.value }))}
-            />
+            <input className="luxury-input" placeholder="Your name" value={form.customer_name} onChange={e => setForm(p => ({ ...p, customer_name: e.target.value }))} />
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map(n => (
                 <button key={n} type="button" onClick={() => setForm(p => ({ ...p, rating: n }))}>
@@ -333,13 +285,7 @@ function ReviewsSection() {
                 </button>
               ))}
             </div>
-            <textarea
-              className="luxury-input resize-none"
-              rows={4}
-              placeholder="Tell us about your experience..."
-              value={form.comment}
-              onChange={e => setForm(p => ({ ...p, comment: e.target.value }))}
-            />
+            <textarea className="luxury-input resize-none" rows={4} placeholder="Tell us about your experience..." value={form.comment} onChange={e => setForm(p => ({ ...p, comment: e.target.value }))} />
             <button type="submit" disabled={submitting} className="btn-gold w-full flex items-center justify-center gap-2">
               {submitting ? 'Submitting...' : <><Send className="w-4 h-4" /> Submit Review</>}
             </button>
@@ -350,7 +296,6 @@ function ReviewsSection() {
   );
 }
 
-// ── Feedback / Complaints Section ────────────────────────────
 function FeedbackSection() {
   const [form, setForm] = useState({ name: '', email: '', subject: 'Customer Feedback', message: '' });
   const [loading, setLoading] = useState(false);
@@ -362,7 +307,7 @@ function FeedbackSection() {
       const res = await fetch('/api/messages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
       const data = await res.json();
       if (data.success) {
-        toast.success('Message sent! We\'ll respond within 24 hours.');
+        toast.success("Message sent! We'll respond within 24 hours.");
         setForm({ name: '', email: '', subject: 'Customer Feedback', message: '' });
       } else {
         toast.error(data.error);
@@ -383,7 +328,6 @@ function FeedbackSection() {
           <div className="gold-divider" />
           <p className="font-body text-gray-500">Your satisfaction is our priority. Share any concerns or suggestions.</p>
         </div>
-
         <form onSubmit={submit} className="space-y-4 border border-black-border p-8">
           <div className="grid grid-cols-2 gap-4">
             <input className="luxury-input" placeholder="Your name *" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} required />
@@ -406,7 +350,6 @@ function FeedbackSection() {
   );
 }
 
-// Map Section
 function MapSection() {
   return (
     <section className="py-0">
@@ -420,33 +363,27 @@ function MapSection() {
               <Phone className="w-4 h-4" /> +234 802 320 8886
             </a>
           </div>
-
-          href="https://maps.google.com/?q=2-14+James+Robertson+Rd+Surulere+Lagos"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-outline-gold flex items-center gap-2"
-          >
-          <MapPin className="w-4 h-4" /> Get Directions
-        </a>
+          <a href="https://maps.google.com/?q=2-14+James+Robertson+Rd+Surulere+Lagos" target="_blank" rel="noopener noreferrer" className="btn-outline-gold flex items-center gap-2">
+            <MapPin className="w-4 h-4" /> Get Directions
+          </a>
+        </div>
+        <div className="w-full h-72 bg-black-card relative overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.4!2d3.3582!3d6.4969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjknNDguOCJOIDPCsDIxJzI5LjUiRQ!5e0!3m2!1sen!2sng!4v1"
+            width="100%"
+            height="100%"
+            style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.5)' }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="AttractionzPro Hub Location"
+          />
+        </div>
       </div>
-      <div className="w-full h-72 bg-black-card relative overflow-hidden">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.4!2d3.3582!3d6.4969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjknNDguOCJOIDPCsDIxJzI5LjUiRQ!5e0!3m2!1sen!2sng!4v1"
-          width="100%"
-          height="100%"
-          style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.5)' }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="AttractionzPro Hub Location"
-        />
-      </div>
-    </div>
-    </section >
+    </section>
   );
 }
 
-// ── Footer ────────────────────────────────────────────────────
 function Footer() {
   return (
     <footer className="bg-black-soft border-t border-black-border py-16 px-6">
@@ -479,12 +416,10 @@ function Footer() {
                 +234 802 320 8886
               </p>
               <div className="flex gap-3 pt-2">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                  className="w-8 h-8 border border-black-border flex items-center justify-center hover:border-gold hover:text-gold transition-all">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 border border-black-border flex items-center justify-center hover:border-gold hover:text-gold transition-all">
                   <Instagram className="w-4 h-4" />
                 </a>
-                <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '2348023208886'}`} target="_blank" rel="noopener noreferrer"
-                  className="w-8 h-8 border border-black-border flex items-center justify-center hover:border-gold hover:text-gold transition-all text-xs font-bold">
+                <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '2348023208886'}`} target="_blank" rel="noopener noreferrer" className="w-8 h-8 border border-black-border flex items-center justify-center hover:border-gold hover:text-gold transition-all text-xs font-bold">
                   WA
                 </a>
               </div>
@@ -493,14 +428,13 @@ function Footer() {
         </div>
         <div className="border-t border-black-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-mono text-xs text-gray-700">© {new Date().getFullYear()} AttractionzPro Hub. All rights reserved.</p>
-          <p className="font-mono text-xs text-gray-700">Crafted with ♥ in Lagos</p>
+          <p className="font-mono text-xs text-gray-700">Crafted with love in Lagos</p>
         </div>
       </div>
     </footer>
   );
 }
 
-// ── Page Export ───────────────────────────────────────────────
 export default function HomePage() {
   return (
     <main>
