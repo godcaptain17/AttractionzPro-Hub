@@ -148,7 +148,7 @@ export default function AppointmentsPage() {
       </div>
 
       {/* Table */}
-      <div className="luxury-card overflow-hidden">
+      <div className="luxury-card overflow-visible">
         {loading ? (
           <div className="flex items-center justify-center h-32">
             <Loader2 className="w-6 h-6 text-gold animate-spin" />
