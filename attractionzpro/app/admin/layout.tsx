@@ -85,8 +85,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Overlay (mobile) */}
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
+  <div className="fixed inset-0 bg-black/60 z-40 lg:hidden pointer-events-auto" onClick={() => setSidebarOpen(false)} />
+)}
 
       {/* Main content */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
@@ -107,7 +107,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-6 overflow-auto">
+        <main className="flex-1 p-6 overflow-auto relative z-10">
           {children}
         </main>
       </div>
