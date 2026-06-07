@@ -82,7 +82,7 @@ function HeroSection() {
           </Link>
           <Link href="/shop" className="btn-outline-gold flex items-center gap-2 group">
             <ShoppingBag className="w-4 h-4" />
-            Shop Perfumes
+            Shop
           </Link>
         </div>
         <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto mt-20 pt-12 border-t border-black-border">
@@ -399,7 +399,7 @@ function Footer() {
           <div>
             <p className="font-mono text-[10px] text-gold tracking-widest uppercase mb-4">Quick Links</p>
             <div className="flex flex-col gap-2">
-              {[['Book Appointment', '/book'], ['Shop Perfumes', '/shop'], ['Gallery', '/gallery'], ['Contact Us', '/contact']].map(([l, h]) => (
+              {[['Book Appointment', '/book'], [' Shop', '/shop'], ['Gallery', '/gallery'], ['Contact Us', '/contact']].map(([l, h]) => (
                 <Link key={l} href={h} className="font-body text-gray-500 text-sm hover:text-gold transition-colors">{l}</Link>
               ))}
             </div>

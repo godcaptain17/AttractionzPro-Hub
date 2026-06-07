@@ -2,7 +2,7 @@
 // lib/utils.ts — Shared utility functions
 // ============================================================
 import { clsx, type ClassValue } from 'clsx';
-import { twMerge }               from 'tailwind-merge';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-NG', {
-    style:    'currency',
+    style: 'currency',
     currency: 'NGN',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
@@ -20,28 +20,28 @@ export function formatCurrency(amount: number): string {
 export function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-NG', {
     weekday: 'long',
-    year:    'numeric',
-    month:   'long',
-    day:     'numeric',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 }
 
 export function formatTime(timeStr: string): string {
   const [hours, minutes] = timeStr.split(':').map(Number);
   const ampm = hours >= 12 ? 'PM' : 'AM';
-  const h    = hours % 12 || 12;
+  const h = hours % 12 || 12;
   return `${h}:${String(minutes).padStart(2, '0')} ${ampm}`;
 }
 
 export function generateWhatsAppText(params: {
-  orderId:      string;
+  orderId: string;
   customerName: string;
-  phone:        string;
-  address:      string;
-  items:        { name: string; quantity: number; price: number }[];
-  total:        number;
-  discount:     number;
-  promoCode?:   string;
+  phone: string;
+  address: string;
+  items: { name: string; quantity: number; price: number }[];
+  total: number;
+  discount: number;
+  promoCode?: string;
 }): string {
   const itemLines = params.items
     .map(i => `  • ${i.name} x${i.quantity} — ₦${(i.price * i.quantity).toLocaleString()}`)
@@ -96,13 +96,24 @@ export const TIME_SLOTS = [
 
 export const PRODUCT_CATEGORIES = [
   'All',
-  'Eau de Parfum',
-  'Eau de Toilette',
-  'Body Mist',
-  'Oil Perfume',
-  'Gift Sets',
-  'Nail Products',
+  'Perfume Collections',
+  'Drinkware',
+  'Skincare',
+  'Jewelries',
+  'Nightwear',
+  'Underwear',
+  'Lingerie',
 ] as const;
+
+export const SHOP_CATEGORIES = [
+  { slug: 'perfume-collections', label: 'Perfume Collections', icon: '✨', desc: 'Exclusive fragrances & signature scents' },
+  { slug: 'drinkware', label: 'Drinkware', icon: '🥂', desc: 'Elegant cups, glasses & tumblers' },
+  { slug: 'skincare', label: 'Skincare', icon: '💆', desc: 'Glow, nourish & radiate beauty' },
+  { slug: 'jewelries', label: 'Jewelries', icon: '💎', desc: 'Timeless pieces for every occasion' },
+  { slug: 'nightwear', label: 'Nightwear', icon: '🌙', desc: 'Comfortable luxury for bedtime' },
+  { slug: 'underwear', label: 'Underwear', icon: '🌸', desc: 'Everyday essentials, elevated' },
+  { slug: 'lingerie', label: 'Lingerie', icon: '❤️', desc: 'Sensual elegance & confidence' },
+];
 
 export const GALLERY_CATEGORIES = [
   'All',
