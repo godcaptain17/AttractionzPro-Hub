@@ -1,40 +1,52 @@
-// app/api/auth/login/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient }         from '@/lib/supabase';
-import { signAdminJWT, COOKIE_NAME } from '@/lib/auth';
+import { createClient } from '@supabase/supabase-js';
+import { SignJWT } from 'jose';
+
+const COOKIE_NAME = 'apro_admin_token';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, password } = body as { email: string; password: string };
 
-    if (!email || !password) {
-      return NextResponse.json({ success: false, error: 'Email and password are required.' }, { status: 400 });
-    }
+    console.log('[Login] Attempting login for:', email);
+    console.log('[Login] SUPABASE_URL exists:', !!process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.log('[Login] SERVICE_ROLE_KEY exists:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+    console.log('[Login] JWT_SECRET exists:', !!process.env.JWT_SECRET);
 
-    const supabase = createAdminClient();
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      { auth: { autoRefreshToken: false, persistSession: false } }
+    );
 
-    // Use the secure validate_admin DB function (compares bcrypt hashes)
     const { data, error } = await supabase.rpc('validate_admin', {
-      p_email:    email.trim().toLowerCase(),
+      p_email: email.trim().toLowerCase(),
       p_password: password,
     });
+
+    console.log('[Login] RPC data:', JSON.stringify(data));
+    console.log('[Login] RPC error:', JSON.stringify(error));
 
     if (error || !data || data.length === 0) {
       return NextResponse.json({ success: false, error: 'Invalid credentials.' }, { status: 401 });
     }
 
     const admin = data[0] as { id: string; email: string };
-    const token = await signAdminJWT(admin.id, admin.email);
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+    const token = await new SignJWT({ sub: admin.id, email: admin.email })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('8h')
+      .sign(secret);
 
     const response = NextResponse.json({ success: true, data: { email: admin.email } }, { status: 200 });
-
     response.cookies.set(COOKIE_NAME, token, {
       httpOnly: true,
-      secure:   process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'strict',
-      maxAge:   60 * 60 * 8, // 8 hours
-      path:     '/',
+      maxAge: 60 * 60 * 8,
+      path: '/',
     });
 
     return response;
