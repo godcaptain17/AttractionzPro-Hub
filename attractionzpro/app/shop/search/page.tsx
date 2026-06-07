@@ -1,7 +1,6 @@
 'use client';
-export const dynamic = 'force-dynamic';
 // app/shop/search/page.tsx — Global search results
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, ShoppingBag, ArrowRight, Sparkles } from 'lucide-react';
@@ -9,7 +8,7 @@ import toast from 'react-hot-toast';
 import { useCart, ProductCard, CartDrawer, CheckoutModal } from '@/app/shop/_components';
 import type { Product } from '@/types';
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams  = useSearchParams();
   const initialQuery  = searchParams.get('q') || '';
 
@@ -118,5 +117,17 @@ export default function SearchPage() {
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} cart={cart} removeFromCart={removeFromCart} updateQty={updateQty} subtotal={subtotal} onCheckout={() => { setCartOpen(false); setCheckoutOpen(true); }} />
       <CheckoutModal open={checkoutOpen} onClose={() => setCheckoutOpen(false)} cart={cart} subtotal={subtotal} onSuccess={handleSuccess} />
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
