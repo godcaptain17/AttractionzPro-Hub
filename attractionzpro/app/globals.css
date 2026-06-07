@@ -3,18 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --gold:        #D4AF37;
-  --gold-light:  #F5E642;
-  --black:       #0a0a0a;
-  --black-soft:  #141414;
-  --black-card:  #1a1a1a;
-  --black-border:#2a2a2a;
-  --cream:       #FDF8F0;
-  --white:       #ffffff;
+  --gold: #D4AF37;
+  --gold-light: #F5E642;
+  --black: #0a0a0a;
+  --black-soft: #141414;
+  --black-card: #1a1a1a;
+  --black-border: #2a2a2a;
+  --cream: #FDF8F0;
+  --white: #ffffff;
 }
 
 @layer base {
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
   html {
     scroll-behavior: smooth;
@@ -27,7 +29,12 @@
     font-family: var(--font-jost), sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-cormorant), Georgia, serif;
     font-weight: 400;
     letter-spacing: 0.02em;
@@ -39,13 +46,27 @@
   }
 
   /* Scrollbar styling */
-  ::-webkit-scrollbar       { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: #0a0a0a; }
-  ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #F5E642; }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #D4AF37;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #F5E642;
+  }
 }
 
 @layer components {
+
   /* Gold shimmer text */
   .text-gold-shimmer {
     background: linear-gradient(90deg, #D4AF37, #F5E642, #D4AF37);
@@ -60,16 +81,24 @@
   .btn-gold {
     @apply bg-gold text-black font-body font-semibold tracking-widest uppercase text-xs px-8 py-4 rounded-none relative overflow-hidden transition-all duration-300;
   }
+
   .btn-gold::after {
     content: '';
-    @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300;
+    @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300 pointer-events-none;
   }
-  .btn-gold:hover::after { opacity: 0.15; }
-  .btn-gold:hover { @apply shadow-gold-glow scale-[1.02]; }
+
+  .btn-gold:hover::after {
+    opacity: 0.15;
+  }
+
+  .btn-gold:hover {
+    @apply shadow-gold-glow scale-[1.02];
+  }
 
   .btn-outline-gold {
     @apply border border-gold text-gold font-body font-semibold tracking-widest uppercase text-xs px-8 py-4 rounded-none relative overflow-hidden transition-all duration-300 bg-transparent;
   }
+
   .btn-outline-gold:hover {
     @apply bg-gold text-black shadow-gold;
   }
@@ -78,12 +107,19 @@
   .luxury-card {
     @apply bg-black-card border border-black-border rounded-none relative overflow-hidden transition-all duration-500;
   }
+
   .luxury-card::before {
     content: '';
-    @apply absolute inset-0 bg-card-shine opacity-0 transition-opacity duration-500;
+    @apply absolute inset-0 bg-card-shine opacity-0 transition-opacity duration-500 pointer-events-none;
   }
-  .luxury-card:hover::before { opacity: 1; }
-  .luxury-card:hover { @apply border-gold/30 shadow-gold; }
+
+  .luxury-card:hover::before {
+    opacity: 1;
+  }
+
+  .luxury-card:hover {
+    @apply border-gold/30 shadow-gold;
+  }
 
   /* Section label */
   .section-label {
@@ -104,27 +140,62 @@
   .admin-nav-item {
     @apply flex items-center gap-3 px-4 py-3 text-gray-400 text-sm font-body tracking-wide hover:text-gold hover:bg-black-card transition-all duration-200 border-l-2 border-transparent;
   }
+
   .admin-nav-item.active {
     @apply text-gold bg-black-card border-l-2 border-gold;
   }
 
   /* Status badges */
-  .badge-pending    { @apply bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-approved   { @apply bg-green-500/20  text-green-400  text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-rejected   { @apply bg-red-500/20    text-red-400    text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-completed  { @apply bg-blue-500/20   text-blue-400   text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-processing { @apply bg-orange-500/20 text-orange-400 text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-delivered  { @apply bg-emerald-500/20 text-emerald-400 text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-cancelled  { @apply bg-red-500/20    text-red-400    text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-unread     { @apply bg-gold/20        text-gold       text-xs px-2 py-1 font-mono tracking-wider uppercase; }
-  .badge-read       { @apply bg-gray-500/20    text-gray-400   text-xs px-2 py-1 font-mono tracking-wider uppercase; }
+  .badge-pending {
+    @apply bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-approved {
+    @apply bg-green-500/20 text-green-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-rejected {
+    @apply bg-red-500/20 text-red-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-completed {
+    @apply bg-blue-500/20 text-blue-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-processing {
+    @apply bg-orange-500/20 text-orange-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-delivered {
+    @apply bg-emerald-500/20 text-emerald-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-cancelled {
+    @apply bg-red-500/20 text-red-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-unread {
+    @apply bg-gold/20 text-gold text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
+
+  .badge-read {
+    @apply bg-gray-500/20 text-gray-400 text-xs px-2 py-1 font-mono tracking-wider uppercase;
+  }
 }
 
 @layer utilities {
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-  .text-balance { text-wrap: balance; }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 
   .clip-path-diagonal {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
@@ -132,8 +203,8 @@
 
   .grid-luxury {
     background-image:
-      linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 }
