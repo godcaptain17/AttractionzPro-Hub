@@ -406,7 +406,7 @@ function FeedbackSection() {
   );
 }
 
-// ── Map Section ───────────────────────────────────────────────
+// Map Section
 function MapSection() {
   return (
     <section className="py-0">
