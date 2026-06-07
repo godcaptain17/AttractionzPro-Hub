@@ -2,7 +2,7 @@
 // app/page.tsx — AttractionzPro Hub Homepage
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link  from 'next/link';
+import Link from 'next/link';
 import {
   Star, MapPin, Phone, Instagram, Clock, ChevronRight,
   Sparkles, ShoppingBag, Calendar, ArrowRight, MessageSquare, Send,
@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 // ── Navigation ───────────────────────────────────────────────
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen]         = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -129,12 +129,12 @@ function HeroSection() {
 
 // ── Services Section ─────────────────────────────────────────
 const SERVICES_DATA = [
-  { icon: '💅', title: 'Classic Manicure',      desc: 'Shape, buff, and polish to perfection with premium products.',  price: 'From ₦3,500' },
-  { icon: '✨', title: 'Gel Manicure',           desc: 'Long-lasting gel formula for a flawless chip-free finish.',      price: 'From ₦6,000' },
-  { icon: '🌸', title: 'Acrylic Extensions',    desc: 'Custom length and shape crafted with precision.',                price: 'From ₦8,500' },
-  { icon: '🎨', title: 'Nail Art & Designs',    desc: 'Bespoke artistry — from minimalist to elaborate statements.',    price: 'From ₦5,000' },
-  { icon: '🦶', title: 'Luxury Pedicure',       desc: 'Full spa treatment for perfectly pampered feet.',               price: 'From ₦5,500' },
-  { icon: '🌹', title: 'Perfume Consultation',  desc: 'Personalized fragrance curation from our premium collection.',  price: 'By Appointment' },
+  { icon: '💅', title: 'Classic Manicure', desc: 'Shape, buff, and polish to perfection with premium products.' },
+  { icon: '✨', title: 'Gel Manicure', desc: 'Long-lasting gel formula for a flawless chip-free finish.' },
+  { icon: '🌸', title: 'Acrylic Extensions', desc: 'Custom length and shape crafted with precision.' },
+  { icon: '🎨', title: 'Nail Art & Designs', desc: 'Bespoke artistry — from minimalist to elaborate statements.' },
+  { icon: '🦶', title: 'Luxury Pedicure', desc: 'Full spa treatment for perfectly pampered feet.' },
+  { icon: '🌹', title: 'Perfume Consultation', desc: 'Personalized fragrance curation from our premium collection.' },
 ];
 
 function ServicesSection() {
@@ -158,7 +158,6 @@ function ServicesSection() {
                 <span className="text-4xl mb-4 block">{svc.icon}</span>
                 <h3 className="font-display text-2xl text-white mb-3 group-hover:text-gold transition-colors duration-300">{svc.title}</h3>
                 <p className="font-body text-gray-500 text-sm leading-relaxed mb-4">{svc.desc}</p>
-                <p className="font-mono text-gold text-xs tracking-widest uppercase">{svc.price}</p>
                 <div className="w-0 group-hover:w-12 h-px bg-gold transition-all duration-500 mt-4" />
               </div>
             </div>
@@ -190,21 +189,21 @@ function AboutSection() {
             </h2>
             <div className="w-12 h-px bg-gold mb-8" />
             <p className="font-body text-gray-400 leading-relaxed mb-6">
-              AttractionzPro Hub was born from a passion for excellence and a dedication to making every client feel 
-              like royalty. Nestled in the heart of Surulere, Lagos, we combine traditional Nigerian elegance with 
+              AttractionzPro Hub was born from a passion for excellence and a dedication to making every client feel
+              like royalty. Nestled in the heart of Surulere, Lagos, we combine traditional Nigerian elegance with
               contemporary luxury beauty services.
             </p>
             <p className="font-body text-gray-400 leading-relaxed mb-10">
-              From meticulous nail artistry to curated premium perfume collections, every experience at AttractionzPro 
-              is designed to leave you feeling extraordinary. Our skilled technicians treat each visit as a personal 
+              From meticulous nail artistry to curated premium perfume collections, every experience at AttractionzPro
+              is designed to leave you feeling extraordinary. Our skilled technicians treat each visit as a personal
               canvas, ensuring results that exceed your expectations.
             </p>
             <div className="grid grid-cols-2 gap-6">
               {[
                 { icon: <Clock className="w-5 h-5" />, label: 'Mon – Sat', value: '9:00 AM – 6:00 PM' },
                 { icon: <MapPin className="w-5 h-5" />, label: 'Location', value: 'Surulere, Lagos' },
-                { icon: <Phone className="w-5 h-5" />,  label: 'Call Us',   value: '+234 802 320 8886' },
-                { icon: <Star  className="w-5 h-5" />,  label: 'Rating',    value: '5.0 ★ — Google' },
+                { icon: <Phone className="w-5 h-5" />, label: 'Call Us', value: '+234 802 320 8886' },
+                { icon: <Star className="w-5 h-5" />, label: 'Rating', value: '5.0 ★ — Google' },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-3 p-4 border border-black-border hover:border-gold/30 transition-colors">
                   <span className="text-gold mt-0.5">{item.icon}</span>
@@ -229,8 +228,10 @@ function AboutSection() {
               {/* Decorative corners */}
               {['top-3 left-3', 'top-3 right-3', 'bottom-3 left-3', 'bottom-3 right-3'].map((pos) => (
                 <div key={pos} className={`absolute ${pos} w-8 h-8 border-gold/40`}
-                  style={{ borderWidth: pos.includes('top') && pos.includes('left') ? '2px 0 0 2px' :
-                            pos.includes('top') ? '2px 2px 0 0' : pos.includes('left') ? '0 0 2px 2px' : '0 2px 2px 0' }} />
+                  style={{
+                    borderWidth: pos.includes('top') && pos.includes('left') ? '2px 0 0 2px' :
+                      pos.includes('top') ? '2px 2px 0 0' : pos.includes('left') ? '0 0 2px 2px' : '0 2px 2px 0'
+                  }} />
               ))}
             </div>
             {/* Floating badge */}
@@ -255,7 +256,7 @@ function ReviewsSection() {
     fetch('/api/reviews?approved=true&limit=6')
       .then(r => r.json())
       .then(d => { if (d.success) setReviews(d.data); })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const submitReview = async (e: React.FormEvent) => {
@@ -279,7 +280,7 @@ function ReviewsSection() {
   };
 
   const FALLBACK_REVIEWS = [
-    { id: '1', customer_name: 'Amaka O.',  rating: 5, comment: 'Absolutely stunning nail art! The attention to detail is unmatched. I get compliments everywhere I go.' },
+    { id: '1', customer_name: 'Amaka O.', rating: 5, comment: 'Absolutely stunning nail art! The attention to detail is unmatched. I get compliments everywhere I go.' },
     { id: '2', customer_name: 'Chisom N.', rating: 5, comment: 'Best nail salon in Lagos hands down. The perfume collection is divine — I bought three bottles!' },
     { id: '3', customer_name: 'Fatima A.', rating: 5, comment: 'The luxury experience here is real. Professional, elegant, and results that last for weeks.' },
   ];
@@ -326,7 +327,7 @@ function ReviewsSection() {
               onChange={e => setForm(p => ({ ...p, customer_name: e.target.value }))}
             />
             <div className="flex gap-2">
-              {[1,2,3,4,5].map(n => (
+              {[1, 2, 3, 4, 5].map(n => (
                 <button key={n} type="button" onClick={() => setForm(p => ({ ...p, rating: n }))}>
                   <Star className={`w-6 h-6 transition-colors ${n <= form.rating ? 'text-gold fill-gold' : 'text-gray-600'}`} />
                 </button>
@@ -351,7 +352,7 @@ function ReviewsSection() {
 
 // ── Feedback / Complaints Section ────────────────────────────
 function FeedbackSection() {
-  const [form, setForm]     = useState({ name: '', email: '', subject: 'Customer Feedback', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', subject: 'Customer Feedback', message: '' });
   const [loading, setLoading] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
@@ -419,29 +420,29 @@ function MapSection() {
               <Phone className="w-4 h-4" /> +234 802 320 8886
             </a>
           </div>
-          <a
-            href="https://maps.google.com/?q=2-14+James+Robertson+Rd+Surulere+Lagos"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline-gold flex items-center gap-2"
+
+          href="https://maps.google.com/?q=2-14+James+Robertson+Rd+Surulere+Lagos"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-outline-gold flex items-center gap-2"
           >
-            <MapPin className="w-4 h-4" /> Get Directions
-          </a>
-        </div>
-        <div className="w-full h-72 bg-black-card relative overflow-hidden">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.4!2d3.3582!3d6.4969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjknNDguOCJOIDPCsDIxJzI5LjUiRQ!5e0!3m2!1sen!2sng!4v1"
-            width="100%"
-            height="100%"
-            style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.5)' }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="AttractionzPro Hub Location"
-          />
-        </div>
+          <MapPin className="w-4 h-4" /> Get Directions
+        </a>
       </div>
-    </section>
+      <div className="w-full h-72 bg-black-card relative overflow-hidden">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.4!2d3.3582!3d6.4969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMjknNDguOCJOIDPCsDIxJzI5LjUiRQ!5e0!3m2!1sen!2sng!4v1"
+          width="100%"
+          height="100%"
+          style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.5)' }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="AttractionzPro Hub Location"
+        />
+      </div>
+    </div>
+    </section >
   );
 }
 
