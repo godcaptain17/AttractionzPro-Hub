@@ -1,4 +1,6 @@
 'use client';
+export const dynamic = 'force-dynamic';
+'use client';
 // app/shop/search/page.tsx — Global search results
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
