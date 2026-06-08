@@ -9,20 +9,19 @@ import { createBrowserClient } from '@/lib/supabase';
 import type { GalleryItem } from '@/types';
 
 export default function GalleryAdminPage() {
-  const [items, setItems]     = useState<GalleryItem[]>([]);
+  const [items, setItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [form, setForm]       = useState({ title: '', category: 'Nail Art', before_image_url: '', after_image_url: '' });
-  const [uploading, setUploading] = useState<'before' | 'after' | null>(null);
-  const [saving, setSaving]   = useState(false);
+  const [form, setForm] = useState({ title: '', category: 'Nail Art', after_image_url: '' });
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
-  const beforeRef = useRef<HTMLInputElement>(null);
-  const afterRef  = useRef<HTMLInputElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const fetchItems = useCallback(async () => {
     setLoading(true);
     try {
-      const res  = await fetch('/api/gallery?limit=100');
+      const res = await fetch('/api/gallery?limit=100');
       const data = await res.json();
       if (data.success) setItems(data.data || []);
     } catch { toast.error('Failed to load gallery.'); }
@@ -31,35 +30,35 @@ export default function GalleryAdminPage() {
 
   useEffect(() => { fetchItems(); }, [fetchItems]);
 
-  const uploadImage = async (file: File, type: 'before' | 'after') => {
-    setUploading(type);
+  const uploadImage = async (file: File) => {
+    setUploading(true);
     try {
       const supabase = createBrowserClient();
-      const ext      = file.name.split('.').pop();
-      const path     = `gallery/${type}-${Date.now()}.${ext}`;
+      const ext = file.name.split('.').pop();
+      const path = `gallery/image-${Date.now()}.${ext}`;
       const { error } = await supabase.storage.from('gallery-images').upload(path, file);
       if (error) throw error;
       const { data: { publicUrl } } = supabase.storage.from('gallery-images').getPublicUrl(path);
-      setForm(p => ({ ...p, [`${type}_image_url`]: publicUrl }));
-      toast.success(`${type} image uploaded`);
+      setForm(p => ({ ...p, after_image_url: publicUrl }));
+      toast.success('Image uploaded');
     } catch (err: any) {
       toast.error('Upload failed: ' + err.message);
     } finally {
-      setUploading(null);
+      setUploading(false);
     }
   };
 
   const saveItem = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.title || !form.after_image_url) { toast.error('Title and After image are required.'); return; }
+    if (!form.title || !form.after_image_url) { toast.error('Title and image are required.'); return; }
     setSaving(true);
     try {
-      const res  = await fetch('/api/gallery', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
+      const res = await fetch('/api/gallery', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
       const data = await res.json();
       if (data.success) {
         toast.success('Gallery item added.');
         setModalOpen(false);
-        setForm({ title: '', category: 'Nail Art', before_image_url: '', after_image_url: '' });
+        setForm({ title: '', category: 'Nail Art', after_image_url: '' });
         fetchItems();
       } else toast.error(data.error);
     } catch { toast.error('Save failed.'); }
@@ -70,7 +69,7 @@ export default function GalleryAdminPage() {
     if (!confirm('Delete this gallery item?')) return;
     setDeleting(id);
     try {
-      const res  = await fetch(`/api/gallery?id=${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/gallery?id=${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.success) { toast.success('Deleted.'); setItems(p => p.filter(i => i.id !== id)); }
       else toast.error(data.error);
@@ -104,11 +103,6 @@ export default function GalleryAdminPage() {
             <div key={item.id} className="luxury-card overflow-hidden group">
               <div className="aspect-square relative overflow-hidden">
                 <Image src={item.after_image_url} alt={item.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                {item.before_image_url && (
-                  <div className="absolute top-2 left-2 bg-gold/90 px-2 py-0.5">
-                    <span className="font-mono text-[9px] text-black uppercase tracking-widest font-bold">Before/After</span>
-                  </div>
-                )}
                 <button
                   onClick={() => deleteItem(item.id)}
                   disabled={deleting === item.id}
@@ -138,45 +132,37 @@ export default function GalleryAdminPage() {
             <form onSubmit={saveItem} className="p-6 space-y-4">
               <div>
                 <label className="font-mono text-[10px] text-gray-500 tracking-widest uppercase block mb-2">Title *</label>
-                <input className="luxury-input" value={form.title} onChange={e => setForm(p => ({...p, title: e.target.value}))} placeholder="e.g. Gold Chrome Ombre" required />
+                <input className="luxury-input" value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))} placeholder="e.g. Gold Chrome Ombre" required />
               </div>
               <div>
                 <label className="font-mono text-[10px] text-gray-500 tracking-widest uppercase block mb-2">Category</label>
-                <select className="luxury-input" value={form.category} onChange={e => setForm(p => ({...p, category: e.target.value}))}>
+                <select className="luxury-input" value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))}>
                   {GALLERY_CATEGORIES.filter(c => c !== 'All').map(c => <option key={c}>{c}</option>)}
                 </select>
               </div>
-
-              {/* Image uploads */}
-              {(['before', 'after'] as const).map(type => (
-                <div key={type}>
-                  <label className="font-mono text-[10px] text-gray-500 tracking-widest uppercase block mb-2">
-                    {type === 'before' ? 'Before Image (optional)' : 'After Image *'}
-                  </label>
-                  <div className="flex items-start gap-3">
-                    {form[`${type}_image_url`] ? (
-                      <div className="w-20 h-20 relative flex-shrink-0">
-                        <Image src={form[`${type}_image_url`]} alt={type} fill className="object-cover" />
-                        <button type="button" onClick={() => setForm(p => ({...p, [`${type}_image_url`]: ''}))} className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 rounded-full flex items-center justify-center">
-                          <X className="w-3 h-3 text-white" />
-                        </button>
-                      </div>
-                    ) : null}
-                    <button
-                      type="button"
-                      onClick={() => type === 'before' ? beforeRef.current?.click() : afterRef.current?.click()}
-                      disabled={uploading === type}
-                      className="flex items-center gap-2 px-4 py-3 border border-dashed border-black-border hover:border-gold/50 text-gray-500 hover:text-gold text-xs font-mono transition-all"
-                    >
-                      {uploading === type ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
-                      Upload {type}
-                    </button>
-                  </div>
+              <div>
+                <label className="font-mono text-[10px] text-gray-500 tracking-widest uppercase block mb-2">Image *</label>
+                <div className="flex items-start gap-3">
+                  {form.after_image_url ? (
+                    <div className="w-20 h-20 relative flex-shrink-0">
+                      <Image src={form.after_image_url} alt="preview" fill className="object-cover" />
+                      <button type="button" onClick={() => setForm(p => ({ ...p, after_image_url: '' }))} className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 rounded-full flex items-center justify-center">
+                        <X className="w-3 h-3 text-white" />
+                      </button>
+                    </div>
+                  ) : null}
+                  <button
+                    type="button"
+                    onClick={() => fileRef.current?.click()}
+                    disabled={uploading}
+                    className="flex items-center gap-2 px-4 py-3 border border-dashed border-black-border hover:border-gold/50 text-gray-500 hover:text-gold text-xs font-mono transition-all"
+                  >
+                    {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                    Upload Image
+                  </button>
                 </div>
-              ))}
-              <input ref={beforeRef} type="file" accept="image/*" className="hidden" onChange={e => { if (e.target.files?.[0]) uploadImage(e.target.files[0], 'before'); }} />
-              <input ref={afterRef}  type="file" accept="image/*" className="hidden" onChange={e => { if (e.target.files?.[0]) uploadImage(e.target.files[0], 'after');  }} />
-
+              </div>
+              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={e => { if (e.target.files?.[0]) uploadImage(e.target.files[0]); }} />
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setModalOpen(false)} className="btn-outline-gold flex-1">Cancel</button>
                 <button type="submit" disabled={saving} className="btn-gold flex-1 flex items-center justify-center gap-2">
